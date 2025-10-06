@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор паролей</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Генератор паролей</h1>
+
+        <form method="POST" action="/generate">
+            <div class="difficulty-options">
+                <h3>Выберите сложность:</h3>
+                <div class="buttons-group">
+                    <button type="button" class="difficulty-btn {% if selected_difficulty == 'easy' %}active{% endif %}" data-difficulty="easy">Простой</button>
+                    <button type="button" class="difficulty-btn {% if selected_difficulty == 'medium' %}active{% endif %}" data-difficulty="medium">Средний</button>
+                    <button type="button" class="difficulty-btn {% if selected_difficulty == 'hard' %}active{% endif %}" data-difficulty="hard">Сложный</button>
+                </div>
+                <input type="hidden" name="difficulty" id="difficulty-input" value="{{ selected_difficulty or 'medium' }}">
+            </div>
+
+            <button type="submit" class="generate-btn">Сгенерировать пароль</button>
+        </form>
+
+        {% if password %}
+        <div class="password-result">
+            <h3>Ваш пароль:</h3>
+            <div class="password-display">{{ password }}</div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+            const difficultyInput = document.getElementById('difficulty-input');
+
+            difficultyBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    difficultyBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    difficultyInput.value = this.dataset.difficulty;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
