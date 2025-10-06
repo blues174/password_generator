@@ -11,3 +11,9 @@
 - Python + Flask
 - HTML + CSS
 - Random module для генерации
+
+## Как запустить
+
+1) Скачать файл с проектом
+2) Установить flask (pip install flask)
+3) Запустить файл app.py
